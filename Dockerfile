@@ -1,4 +1,12 @@
-FROM alpine:latest
+FROM httpd:alpine
+
 RUN apk update && apk add speedtest-cli jq
-CMD speedtest-cli --json | jq -r '[.timestamp, .ping, .download, .upload]|@csv' >> ./results.csv
-  
+WORKDIR /speedtest
+
+COPY index.html /usr/local/apache2/htdocs/
+COPY perform_speedtest.sh .
+
+EXPOSE 80
+
+RUN chmod +x perform_speedtest.sh
+RUN ["sh", "perform_speedtest.sh"]
