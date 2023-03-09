@@ -6,7 +6,5 @@ WORKDIR /speedtest
 COPY index.html /usr/local/apache2/htdocs/
 COPY perform_speedtest.sh .
 
-EXPOSE 80
-
 RUN chmod +x perform_speedtest.sh
 RUN ["sh", "perform_speedtest.sh"]
